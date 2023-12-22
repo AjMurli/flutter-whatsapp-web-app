@@ -4,6 +4,8 @@ class AppString{
 
   // Images
   static const String logoImg = "assets/images/logo.png";
+  static const String backgroundImage = "assets/images/background-image.png";
+
   static const String loginBackgroundFirstImage = "assets/images/background.png";
   static const String loginBackgroundSecondImage = "assets/images/background-2.png";
   static const String signUpImg = "assets/images/signUp.jpg";

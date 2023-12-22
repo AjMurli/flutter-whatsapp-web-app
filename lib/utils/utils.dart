@@ -45,7 +45,7 @@ class Utils{
         context,
         title,
         message,
-        AppColors.primaryColor,
+        AppColors.primaryDarkColor,
         Icons.check_circle,
       );
     }
@@ -248,7 +248,7 @@ class Utils{
             fontFamily: "Poppins",
             fontWeight: FontWeight.w900
         ),
-        colorClickableText: AppColors.primaryColor,
+        colorClickableText: AppColors.primaryDarkColor,
         trimMode: TrimMode.Line,
         trimCollapsedText: '...Read More',
         trimExpandedText: ' less ',

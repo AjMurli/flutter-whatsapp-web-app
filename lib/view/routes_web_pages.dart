@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:notification_app_web/view/home_screen.dart';
+import 'package:notification_app_web/models/user_model.dart';
+import 'package:notification_app_web/view/home/home_screen.dart';
+import 'package:notification_app_web/view/home/messages_screen.dart';
 
 import 'login_sign_up/login_sign_up_screen.dart';
 
@@ -15,6 +17,8 @@ class RoutesForWebPages {
         return MaterialPageRoute(builder: (c) => const LoginSignUpScreen());
       case "/home":
         return MaterialPageRoute(builder: (c) => const HomeScreen());
+      case "/messages":
+        return MaterialPageRoute(builder: (c) => MessagesScreen(arguments as UserModel));
     }
     return errorPageRoute();
 }

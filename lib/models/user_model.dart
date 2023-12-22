@@ -4,7 +4,7 @@ class UserModel{
   String email;
   String password;
   String profileImageUrl;
-  String userToken;
+  // String userToken;
   String fcmToken;
 
   UserModel(
@@ -14,7 +14,7 @@ class UserModel{
      this.password,
   {
     this.profileImageUrl = "",
-    this.userToken = "",
+    // this.userToken = "",
     this.fcmToken = "",
   }
   );
@@ -26,7 +26,7 @@ class UserModel{
       "email": email,
       "password": password,
       "profileImageUrl": profileImageUrl,
-      "userToken": userToken,
+      // "userToken": userToken,
       "fcmToken": fcmToken,
     };
   }

@@ -3,7 +3,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:notification_app_web/provider/chat_provider.dart';
 import 'package:notification_app_web/view/routes_web_pages.dart';
+import 'package:provider/provider.dart';
 
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -34,7 +36,14 @@ Future<void> main() async {
   await Firebase.initializeApp();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => ChatProvider(),
+      child: MyApp(),
+    )
+  );
+  // runApp(const MyApp());
+
   // FirebaseMessaging.instance.getToken().then(print); // token
   // print("Default Token:");
   //  ci1PNqUua22gIBa-e6yKzs:APA91bHxS480NaKOEEjIerEagYJI_HyaqVPbHcyukITfmq184-AULtMcyZ-TtIu1B5Qf4O4lK_uDvq_P1KaNh9GqgyRssNqhEthf6ZrTujRV3OiTDM8zbVPMZw5dNKrqPB84PY_Q5RGV
@@ -60,8 +69,6 @@ class _MyAppState extends State<MyApp> {
       ),
       initialRoute: firstRoute,
       onGenerateRoute: RoutesForWebPages.createRoutes,
-      // home: LoginSignUpScreen(),
-      // home: HomeScreen(),
     );
   }
 }

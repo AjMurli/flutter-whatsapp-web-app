@@ -9,7 +9,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:notification_app_web/view/home_screen.dart';
+import 'package:notification_app_web/view/home/home_screen.dart';
 import 'package:notification_app_web/models/user_model.dart';
 import 'package:notification_app_web/utils/app_colors.dart';
 import 'package:notification_app_web/utils/app_string.dart';
@@ -24,7 +24,7 @@ class LoginSignUpScreen extends StatefulWidget {
 }
 
 class _LoginSignUpScreenState extends State<LoginSignUpScreen> {
-  bool doesUserWantToSignUp = false;
+  bool doesUserWantToSignUp = true;
   Uint8List? selectedImage;
   bool errorInPicture = false;
   bool isLoading = false;
@@ -47,9 +47,9 @@ class _LoginSignUpScreenState extends State<LoginSignUpScreen> {
         String urlImage = await task.snapshot.ref.getDownloadURL();
         userData.profileImageUrl = urlImage;
         // Retrieve and set the user token
-        String userToken = await FirebaseAuth.instance.currentUser?.getIdToken() ?? "";
-        userData.userToken = userToken;
-        debugPrint("userToken: $userToken");
+        // String userToken = await FirebaseAuth.instance.currentUser?.getIdToken() ?? "";
+        // userData.userToken = userToken;
+        // debugPrint("userToken: $userToken");
         // Retrieve and set the FCM token
         String fcmToken = await FirebaseMessaging.instance.getToken() ?? "";
         userData.fcmToken = fcmToken;
@@ -67,7 +67,7 @@ class _LoginSignUpScreenState extends State<LoginSignUpScreen> {
               setState(() {
                 isLoading  = false;
               });
-              nextScreenReplace(context, "/home");
+              Navigator.pushReplacementNamed(context, "/home");
         });
       });
     }else{
@@ -103,7 +103,7 @@ class _LoginSignUpScreenState extends State<LoginSignUpScreen> {
      setState(() {
        isLoading = false;
      });
-     nextScreenReplace(context, "/home");
+     Navigator.pushReplacementNamed(context, "/home");
    });
  }
 
@@ -114,15 +114,11 @@ class _LoginSignUpScreenState extends State<LoginSignUpScreen> {
     if(emailId.isNotEmpty && Utils().isEmailValid(emailId)){
       if(password.isNotEmpty && password.length >= 6){
         if(doesUserWantToSignUp == true){
-          // Sign Up Form
           if(name.isNotEmpty && name.length >=3){
             signUpUserNow(name,emailId,password);
           }else{
             Utils().DelightToastMessage(title: "Oops...! Error", message: "Name should be greater then 3 characters", backgroundColor: AppColors.redColor, icon: Icons.error_outline, iconColor: AppColors.whiteColor, textColor: AppColors.whiteColor, traling: null, shadowColor: null, duration: 3, onTap: (){}, context: context);
           }
-          setState(() {
-            isLoading = false;
-          });
         }else{
           loginUserNow(emailId,password);
         }
@@ -207,12 +203,12 @@ class _LoginSignUpScreenState extends State<LoginSignUpScreen> {
                 Container(
                   height: 40,
                   width: double.infinity,
-                  child: ElevatedButton(
+                  child: isLoading ? Center(child: CircularProgressIndicator()):
+                  ElevatedButton(
                       onPressed: (){
                         formValidation();
                       },
-                      child: isLoading ? CircularProgressIndicator(color: AppColors.whiteColor,):
-                          textWidget(doesUserWantToSignUp ? "Sign Up" : "Log In", screenWidth * 0.01, null, FontWeight.normal)
+                      child: textWidget(doesUserWantToSignUp ? "Sign Up" : "Log In", screenWidth * 0.01, null, FontWeight.normal)
                   ),
                 ),
                 SizedBox(height: 5),

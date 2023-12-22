@@ -149,7 +149,7 @@ Widget HeaderWidget({
               child: customElevatedButtonIcon(
                 buttonTitle!,
                 null,
-                AppColors.primaryColor,
+                AppColors.primaryDarkColor,
                 RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(5),
                 ),
@@ -217,7 +217,7 @@ Widget textFormFieldWidget({
       enabledBorder: const UnderlineInputBorder(),
         focusedBorder: UnderlineInputBorder(
             borderSide: BorderSide(
-                color: AppColors.primaryColor
+                color: AppColors.primaryDarkColor
             )
         ),
       hintText: hintText,
@@ -275,15 +275,15 @@ Widget textFormFieldBorderWidget({
     onTap: onTapped,
     decoration: InputDecoration(
       filled: true,
-        fillColor: isLightMode(context!) ? null : AppColors.blueSelectedColor,
+        fillColor: isLightMode(context!) ? null : AppColors.secondaryDarkColor,
         enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(width: 1, color:  isLightMode(context) ? AppColors.hintLabel3TextColor : AppColors.blueSelectedColor,)
+          borderSide: BorderSide(width: 1, color:  isLightMode(context) ? AppColors.hintLabel3TextColor : AppColors.secondaryDarkColor,)
         ),
         counterText: "",
         border: border,
         focusedBorder: UnderlineInputBorder(
             borderSide: BorderSide(
-                color: AppColors.primaryColor
+                color: AppColors.primaryDarkColor
             )
         ),
         hintText: hintText,
@@ -307,7 +307,7 @@ Widget  customSearchTextField(
     BuildContext context,
     ){
   return TextFormField(
-    cursorColor: AppColors.primaryColor,
+    cursorColor: AppColors.primaryDarkColor,
     controller: controller,
     onChanged: onChanged,
     initialValue: initialValue,
@@ -317,7 +317,7 @@ Widget  customSearchTextField(
     textInputAction: TextInputAction.done,
     decoration: InputDecoration(
       filled: true,
-      fillColor: AppColors.primaryColor,
+      fillColor: AppColors.primaryDarkColor,
       labelText: labelText,
       hintText: hintText,
       hintStyle: const TextStyle(
@@ -334,12 +334,12 @@ Widget  customSearchTextField(
       ),
       errorBorder: OutlineInputBorder(
         borderSide: BorderSide(
-          color: isLightMode(context) ? AppColors.hintLabel2TextColor : AppColors.blueSelectedColor,
+          color: isLightMode(context) ? AppColors.hintLabel2TextColor : AppColors.secondaryDarkColor,
         ),
       ),
       focusedBorder: OutlineInputBorder(
         borderSide: BorderSide(
-          color: AppColors.primaryColor
+          color: AppColors.primaryDarkColor
         ),
         borderRadius: BorderRadius.circular(50),
       ),
@@ -594,7 +594,7 @@ Widget customDropdown({
     ),
     child: Theme(
       data: Theme.of(context).copyWith(
-        canvasColor: isLightMode(context) ? AppColors.whiteColor : AppColors.blueSelectedColor,
+        canvasColor: isLightMode(context) ? AppColors.whiteColor : AppColors.secondaryDarkColor,
       ),
       child: DropdownButton<String>(
         value: value,
@@ -627,7 +627,7 @@ Widget customOutLineDropdownWidget({
     width: dropDownWidth!,
     padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width <= 900 ?  MediaQuery.of(context).size.width * 0.03 :18),
     decoration: BoxDecoration(
-      color: isLightMode(context) ? null : AppColors.blueSelectedColor,
+      color: isLightMode(context) ? null : AppColors.secondaryDarkColor,
       borderRadius: BorderRadius.circular(3),
       border: Border.all(
         color: dropDownBorderColor!,
@@ -636,7 +636,7 @@ Widget customOutLineDropdownWidget({
     ),
     child: Theme(
       data: Theme.of(context).copyWith(
-        canvasColor:  isLightMode(context) ? AppColors.whiteColor : AppColors.blueSelectedColor,
+        canvasColor:  isLightMode(context) ? AppColors.whiteColor : AppColors.secondaryDarkColor,
       ),
       child: DropdownButton<String>(
         value: value,
@@ -948,7 +948,7 @@ Widget chipWidget(
   return  GestureDetector(
     onTap: onTap,
     child: Material(
-        color: AppColors.primaryColor,
+        color: AppColors.primaryDarkColor,
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(50),
             side: borderSide!

@@ -3,45 +3,41 @@ import 'package:flutter/material.dart';
 
 class AppColors {
   //
-  // static const MaterialColor primaryLightColor = MaterialColor(
-  //   0xff159811,
-  //   <int, Color>{
-  //     50: Color(0xff159811),
-  //     100: Color(0xff159811),
-  //     200: Color(0xff159811),
-  //     300: Color(0xff159811),
-  //     400: Color(0xff159811),
-  //     500: Color(0xff159811),
-  //     600: Color(0xff159811),
-  //     700: Color(0xff159811),
-  //     800: Color(0xff159811),
-  //     900: Color(0xff159811),
-  //   },
-  // );
-  //
-  // static const MaterialColor primaryDarkColor = MaterialColor(
-  //   0xff010a1e,
-  //   <int, Color>{
-  //     50: Color(0xff010a1e),
-  //     100: Color(0xff010a1e),
-  //     200: Color(0xff010a1e),
-  //     300: Color(0xff010a1e),
-  //     400: Color(0xff010a1e),
-  //     500: Color(0xff010a1e),
-  //     600: Color(0xff010a1e),
-  //     700: Color(0xff010a1e),
-  //     800: Color(0xff010a1e),
-  //     900: Color(0xff010a1e),
-  //   },
-  // );
+  static const MaterialColor primaryLightColor = MaterialColor(
+    0xff159811,
+    <int, Color>{
+      50: Color(0xff159811),
+      100: Color(0xff159811),
+      200: Color(0xff159811),
+      300: Color(0xff159811),
+      400: Color(0xff159811),
+      500: Color(0xff159811),
+      600: Color(0xff159811),
+      700: Color(0xff159811),
+      800: Color(0xff159811),
+      900: Color(0xff159811),
+    },
+  );
 
-  static const primaryColor = Color(0xff010a1e);
-  static const Color blueBlur1Color = Color(0xFF03146B);
+  static const MaterialColor primaryDarkColor = MaterialColor(
+    0xff010a1e,
+    <int, Color>{
+      50: Color(0xff010a1e),
+      100: Color(0xff010a1e),
+      200: Color(0xff010a1e),
+      300: Color(0xff010a1e),
+      400: Color(0xff010a1e),
+      500: Color(0xff010a1e),
+      600: Color(0xff010a1e),
+      700: Color(0xff010a1e),
+      800: Color(0xff010a1e),
+      900: Color(0xff010a1e),
+    },
+  );
 
-  static const Color blueColor = Colors.blue;
-  static const Color blueHoverColor = Color(0xff031233);
-  static const Color blueSelectedColor = Color(0xff051844);
-  static const Color blueDarkColor = Color(0xff020d25);
+
+  static const Color secondaryDarkColor = Color(0xff051844);
+
 
   static const Color whiteColor = CupertinoColors.white;
   static const Color black = CupertinoColors.black;
