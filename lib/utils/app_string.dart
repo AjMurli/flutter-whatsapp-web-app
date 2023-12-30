@@ -33,6 +33,7 @@ class AppString{
   static const String backMeasureWebImg = "assets/images/new_back_measure_icon.png";
   static const String sideMeasureWebImg = "assets/images/new_side_measure_icon.webp";
   static const String profileImg = "assets/images/profile5.png";
+  static const String fileImg = "assets/images/file.jpg";
 
 
 
