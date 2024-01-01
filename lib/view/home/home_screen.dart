@@ -95,6 +95,7 @@ saveTokenToUserInfo() async{
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
+        physics: NeverScrollableScrollPhysics(),
         child: Container(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,

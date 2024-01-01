@@ -33,7 +33,8 @@ class _MessagesAreaState extends State<MessagesArea> {
         color: AppColors.secondaryDarkColor
       ),
       child: toUserData == null ?
-      Center(child: textWidget("Choose a chat to see messages", 15, AppColors.whiteColor, FontWeight.normal)) :
+      Center(
+          child: textWidget("Choose a chat to see messages", 15, AppColors.whiteColor, FontWeight.normal)) :
           Column(
             children: [
               Container(
@@ -53,8 +54,8 @@ class _MessagesAreaState extends State<MessagesArea> {
                     SizedBox(width: 10),
                     textWidget(toUserData.name, 15, AppColors.whiteColor, FontWeight.bold),
                     Spacer(),
-                    Icon(Icons.search),
-                    Icon(Icons.more_vert_outlined),
+                    Icon(Icons.search,color: AppColors.whiteColor,),
+                    Icon(Icons.more_vert_outlined,color: AppColors.whiteColor,),
                   ],
                 ),
               ),

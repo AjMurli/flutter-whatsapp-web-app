@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "496326957683",
+    "project_id": "notification-website-app",
+    "storage_bucket": "notification-website-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:496326957683:android:4af845d028cf76f58de806",
+        "android_client_info": {
+          "package_name": "com.example.notification_app_web"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBOWMIIDc1DmtR92t4_zdKXCEcHub2x5Lk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

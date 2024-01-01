@@ -417,9 +417,12 @@ class _MessagesWidgetsState extends State<MessagesWidgets> {
                   ),
                 ),
                 FloatingActionButton(
-                  backgroundColor: AppColors.greenColor,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(50)
+                  ),
+                  backgroundColor: AppColors.whiteColor,
                     mini: true,
-                    child: Icon(Icons.send),
+                    child: Icon(Icons.send,color: AppColors.greenColor,),
                     onPressed: (){
                     sendMessage();
                     },
