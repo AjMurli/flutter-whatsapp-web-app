@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:notification_app_web/models/chat_model.dart';
@@ -11,7 +13,9 @@ import 'package:notification_app_web/provider/chat_provider.dart';
 import 'package:notification_app_web/utils/app_colors.dart';
 import 'package:notification_app_web/utils/app_string.dart';
 import 'package:notification_app_web/utils/common_widgets.dart';
+import 'package:notification_app_web/utils/utils.dart';
 import 'package:provider/provider.dart';
+import 'package:http/http.dart' as http;
 
 class MessagesWidgets extends StatefulWidget {
   UserModel fromUserData;
@@ -36,7 +40,41 @@ class _MessagesWidgetsState extends State<MessagesWidgets> {
   bool _loadingFile = false;
   Uint8List? _selectedImage;
   Uint8List? _selectedFile;
+  String? _token;
 
+  sentPushNotificationToWeb(String messageText, String fromUserName) async{
+    if(_token == null){
+      Utils().showErrorMessage(context,"Error", "No Token Exist");
+      return;
+    }else{
+      try{
+        await http.post(
+          Uri.parse('https://fcm.googleapis.com/fcm/send'),
+          headers: <String, String>
+          {
+            "Content-Type": "application/json",
+            "Authorization": "key=AAAAc49kWnM:APA91bFmEbLj0fYbGaWZsoIv0SWtiun4Wkb4DwyM9K82YhXXaWGBpmkEGW7JjbrV_FbQyTtx3WJEc3fMZEh2-2294Ru7wid9wnXpCjz5-4fp3ftEbD4hDR3F_4weMa06NfZGyIBljBsW"
+          },
+          body: json.encode(
+              {
+                "to": _token,
+                "message":
+                {
+                  "token" : _token
+                },
+                "notification":
+                {
+                  "title" :  fromUserName,
+                  "body" : messageText,
+                }
+              }),
+        );
+      }catch(error){
+        Utils().showErrorMessage(context,"Error", error.toString());
+      }
+
+    }
+  }
 
   sendMessage() {
     String messageText = sendMessageController.text.trim();
@@ -96,8 +134,17 @@ class _MessagesWidgetsState extends State<MessagesWidgets> {
         .collection("chats")
         .doc(chat.fromUserId).collection("lastMessage")
         .doc(chat.toUserId)
-        .set(chat.toMap()).then((value) {
-          // Send Push Notification
+        .set(chat.toMap()).then((value) async{
+
+      await FirebaseFirestore.instance.collection("UserDetails")
+          .doc(chat.toUserId)
+          .get().then((snapshot) {
+            setState(() {
+              _token = snapshot.data()!["token"];
+            });
+      });
+      // Send Push Notification
+      sentPushNotificationToWeb(message,widget.fromUserData.name);
     });
   }
 
@@ -178,7 +225,7 @@ class _MessagesWidgetsState extends State<MessagesWidgets> {
                   case ConnectionState.active:
                   case ConnectionState.done:
                     if(dataSnapshot.hasError){
-                      return textWidget("Error Occured", 14, AppColors.whiteColor, FontWeight.normal);
+                      return textWidget("Error Occurred", 14, AppColors.whiteColor, FontWeight.normal);
                     }else{
                       final snapshot = dataSnapshot.data as QuerySnapshot;
                       List<DocumentSnapshot> messageList = snapshot.docs.toList();
@@ -198,7 +245,55 @@ class _MessagesWidgetsState extends State<MessagesWidgets> {
                             }
                             Size width = MediaQuery.of(context).size * 0.8;
                             return GestureDetector(
-                              onLongPress: (){},
+                              onLongPress: () async{
+                                if(eachMessage["uid"] == FirebaseAuth.instance.currentUser!.uid){
+                                  await showDialog(
+                                    context: context,
+                                    builder: (context) => AlertDialog(
+                                      content: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          ElevatedButton(
+                                              onPressed: () async{
+                                                Navigator.of(context).pop();
+                                                await deleteForMe(
+                                                  eachMessage.id,
+                                                  FirebaseAuth.instance.currentUser!.uid,
+                                                  widget.toUserData.uid,
+                                                  eachMessage["text"].toString()
+                                                );
+                                                await deleteForThem(
+                                                    eachMessage.id,
+                                                    FirebaseAuth.instance.currentUser!.uid,
+                                                    widget.toUserData.uid,
+                                                    eachMessage["text"].toString()
+                                                );
+                                              }, child: Text("Delete for everyone")
+                                          ),
+                                          SizedBox(height:20),
+                                          ElevatedButton(
+                                              onPressed: () async{
+                                                Navigator.of(context).pop();
+                                                await deleteForMe(
+                                                eachMessage.id,
+                                                FirebaseAuth.instance.currentUser!.uid,
+                                                widget.toUserData.uid,
+                                                eachMessage["text"].toString()
+                                                );
+                                              }, child: Text("Delete for me")
+                                          ),
+                                          SizedBox(height:20),
+                                          ElevatedButton(
+                                              onPressed: (){
+                                                Navigator.pop(context);
+                                              }, child: Text("Cancel")
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  );
+                                }
+                              },
                               child: eachMessage["text"].toString().contains(".jpg") ?
                               Align(
                                 alignment: alignment,
@@ -443,5 +538,27 @@ class _MessagesWidgetsState extends State<MessagesWidgets> {
         setState(() {_loadingPic = false;});
       });
     }
+  }
+
+
+  deleteForMe(messageID, myID, toUserID, messageTextToUpdate) async{
+    await FirebaseFirestore.instance
+        .collection("messages").doc(myID)
+        .collection(toUserID).doc(messageID)
+        .update(
+        {
+          "text" : "🚫 message deleted"
+        }
+        );
+  }
+  deleteForThem(messageID, myID, toUserID, messageTextToUpdate) async{
+    await FirebaseFirestore.instance
+        .collection("messages").doc(toUserID)
+        .collection(myID).doc(messageID)
+        .update(
+        {
+          "text" : "🚫 message deleted"
+        }
+    );
   }
 }
